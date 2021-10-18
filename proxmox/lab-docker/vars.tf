@@ -1,0 +1,12 @@
+variable "ssh_key" {
+#  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDcwZAOfqf6E6p8IkrurF2vR3NccPbMlXFPaFe2+Eh/8QnQCJVTL6PKduXjXynuLziC9cubXIDzQA+4OpFYUV2u0fAkXLOXRIwgEmOrnsGAqJTqIsMC3XwGRhR9M84c4XPAX5sYpOsvZX/qwFE95GAdExCUkS3H39rpmSCnZG9AY4nPsVRlIIDP+/6YSy9KWp2YVYe5bDaMKRtwKSq3EOUhl3Mm8Ykzd35Z0Cysgm2hR2poN+EB7GD67fyi+6ohpdJHVhinHi7cQI4DUp+37nVZG4ofYFL9yRdULlHcFa9MocESvFVlVW0FCvwFKXDty6askpg9yf4FnM0OSbhgqXzD leonardo@LeonNote"
+   default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC12lewID1hH+r1xgBEQQcjhMzKRL3GQTVXhBBYHsN4JcX1J7ZgD+N7EUjXyW2MiFUBjOXEUiEh/y123PEKAjXNuG6v22B50ydgv0Yh/c1SyIy88qupZXjLCKnKYjrGTNDYyoIuk7y8h4VyQZMeu/NWDJlw/Q5MTQ8pbjowLgiyozeYlY0nTRGC6B4PmH+GY7lIRai3FCYEFoPscdabeHAXt+6H27vj6sk51c8oHIu2SQButcZtgCqBwrHcPvlsLsBO7EXUwAl9b08MxlHJfUgzb9mXG4szvSttAr4wLRQ7jD38qraoLrgR4u+i/y1OLUgkQUplc4MPKHn7fJslLdUF/RCgQfnDTV56o/mO2llTqpmjNLWd2QDbO+CzvVjW01N+VD1lIU0GlLO/bLXYSeD7yeOG35rv3hdPw/6jiA71qI1RM47xarswApIgk/5MY4Qc7EOwEi9fYj7VT40kmZscd0jwr3P46BYJut1FjMAW4nfVbuFQZim1/pH/pCTLdPs= leonardo@LeonNote"
+}
+
+variable "proxmox_host" {
+    default = "pve"
+}
+
+variable "template_name" {
+    default = "ubuntu-focal-cloudinit-template"
+}
