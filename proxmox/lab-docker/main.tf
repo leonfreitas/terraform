@@ -1,32 +1,6 @@
-terraform {
-  required_providers {
-    proxmox = {
-      source = "Telmate/proxmox"
-      version = "2.8.0"
-    }
-  }
-}
-
-provider "proxmox" {
-  pm_log_enable = true
-  pm_log_file = "terraform-plugin-proxmox.log"
-  pm_log_levels = {
-    _default = "debug"
-    _capturelog = ""
-  }
-  # pm_timeout = 2000
-  # url is the hostname (FQDN if you have one) for the proxmox host you'd like to connect to to issue the commands. my proxmox host is 'prox-1u'. Add /api2/json at the end for the API
-  pm_api_url = "https://10.10.100.2:8006/api2/json"
-  # api token id is in the form of: <username>@pam!<tokenId>
-  pm_api_token_id = "terraform@pam!token_id"
-  # this is the full secret wrapped in quotes. don't worry, I've already deleted this from my proxmox cluster by the time you read this post
-  pm_api_token_secret = "07db6919-c664-4d45-9d8c-4b59140e0b3d"
-  # leave tls_insecure set to true unless you have your proxmox SSL certificate situation fully sorted out (if you do, you will know)
-  pm_tls_insecure = true
-}
 # resource is formatted to be "[type]" "[entity_name]" so in this case
 # we are looking to create a proxmox_vm_qemu entity named test_server
-resource "proxmox_vm_qemu" "vm" {
+resource "proxmox_vm_qemu" "docker-vm" {
   count = 0 # just want 1 for now, set to 0 and apply to destroy VM
   name = "vm-docker-${count.index + 1}" #count.index starts at 0, so + 1 means this VM will be named test-vm-1 in proxmox
   # this now reaches out to the vars file. I could've also used this var above in the pm_api_url setting but wanted to spell it out up there. target_node is different than api_url. target_node is which node hosts the template and thus also which node will host the new VM. it can be different than the host you use to communicate with the API. the variable contains the contents "prox-1u"
@@ -50,7 +24,13 @@ resource "proxmox_vm_qemu" "vm" {
     storage = "datastore"
     iothread = 1
   }
-  
+  connection {
+        type        = "ssh"
+        host        = self.ssh_host
+        user        = var.ssh_user
+        private_key="${file("~/.ssh/id_rsa")}"
+        port        = self.ssh_port
+    }
   # if you want two NICs, just copy this whole network section and duplicate it
   network {
     model = "virtio"
@@ -62,7 +42,7 @@ resource "proxmox_vm_qemu" "vm" {
       network,
     ]
   }
-  
+
   # the ${count.index + 1} thing appends text to the end of the ip address
   # in this case, since we are only adding a single VM, the IP will
   # be 10.98.1.91 since count.index starts at 0. this is how you can create
@@ -73,4 +53,15 @@ resource "proxmox_vm_qemu" "vm" {
   sshkeys = <<EOF
   ${var.ssh_key}
   EOF
+  
+  provisioner "remote-exec" {
+    inline = [
+    "sudo apt update -y",
+    "sudo apt install -y ca-certificates curl gnupg lsb-release",
+    "sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
+    "echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu   focal stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null",
+    "sudo apt update -y",
+    "sudo apt install -y docker-ce docker-ce-cli containerd.io" 
+    ]
+  }
 }
