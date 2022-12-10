@@ -12,5 +12,5 @@ variable "proxmox_host" {
 }
 
 variable "template_name" {
-    default = "ubuntu-focal-cloudinit-template"
+    default = "ubuntu-bionic-cloudinit-template"
 }
