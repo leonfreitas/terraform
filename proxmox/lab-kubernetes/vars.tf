@@ -12,5 +12,5 @@ variable "proxmox_host" {
 }
 
 variable "template_name" {
-    default = "ubuntu-bionic-cloudinit-template"
+    default = "ubuntu-server-focal-kubernetes"
 }
