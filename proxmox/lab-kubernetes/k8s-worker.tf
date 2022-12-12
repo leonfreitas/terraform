@@ -1,6 +1,6 @@
-resource "proxmox_vm_qemu" "k8s-master" {
-  count = 1
-  name = "k8s-master-${count.index + 1}"
+resource "proxmox_vm_qemu" "k8s-worker" {
+  count = 3
+  name = "k8s-worker-${count.index + 1}"
   target_node = var.proxmox_host
   clone = var.template_name
   agent = 1
@@ -39,7 +39,7 @@ resource "proxmox_vm_qemu" "k8s-master" {
     ]
   }
 
-  ipconfig0 = "ip=10.10.100.5${count.index + 1}/24,gw=10.10.100.1"
+  ipconfig0 = "ip=10.10.100.5${5 + (count.index + 1)}/24,gw=10.10.100.1"
   
   sshkeys = <<EOF
   ${var.ssh_key}
