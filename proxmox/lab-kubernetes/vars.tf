@@ -1,16 +1,20 @@
 variable "ssh_key" {
-#  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDcwZAOfqf6E6p8IkrurF2vR3NccPbMlXFPaFe2+Eh/8QnQCJVTL6PKduXjXynuLziC9cubXIDzQA+4OpFYUV2u0fAkXLOXRIwgEmOrnsGAqJTqIsMC3XwGRhR9M84c4XPAX5sYpOsvZX/qwFE95GAdExCUkS3H39rpmSCnZG9AY4nPsVRlIIDP+/6YSy9KWp2YVYe5bDaMKRtwKSq3EOUhl3Mm8Ykzd35Z0Cysgm2hR2poN+EB7GD67fyi+6ohpdJHVhinHi7cQI4DUp+37nVZG4ofYFL9yRdULlHcFa9MocESvFVlVW0FCvwFKXDty6askpg9yf4FnM0OSbhgqXzD leonardo@LeonNote"
-   default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFkBEFqS/M6hU1jNfKzNFbOVQhN2qEBycOENB2VUwBnnz5CsSlR3WQFGxbp0H1/dMoGfZZ5bY4CGUWwrmoJdqI48I2t2GpmLdi9IIUvdjRkXkmop83cfNfwX09cjbQU5Vva7MPNpnQnbVsbW1uky5Cea4YZWh1mejICGDzXlr2RP3IZAd/L+suVyt4YCfAsWT5sVueFpH1VxZlWWKTTIHg9JL4JQxBsX8MxQ/WMCmuFARxVc5nOisgFhIfN0QQv2ZrgIV3zpIfO/BxZBMJ2DOYateeORGQp8RCEBsrOhpEgbZZUUqmECVD/a/Am40fI4umddWlyXsa4gm3dph8T5w/z0UZZw7SaZkYgypp2FySZQdMQu6KPvEdLddOtQDVcl0yAce6a2cfNkVpMy1bDU9CPIYlaop9eLfpypbRk2eLvHnYcwVsTEtwKNgf1m3KDalgXnU1cWXIVsS0syT4GH82OIgMhbz46Kq8OJrUiilMrPQwG7FUv7L7IUah52UYhI3s9eaodjKL5pg1FIBI13gYvH/nZRuxcb52e+iTjP6NS6jU+go4bc7Vq7Uv+6VXFMViQi2G15uzClPVqpb4kLhmhedR0ZWAWg8W0gbcZbn8yhsI7pBAlnjVQq4wtFgSZoJtHR6OfnJ1ig0+n3b7AOjcaTlEPCKHPVeaHnM7DGTtmQ== leonardofreitas.info@gmail.com"
+  default = []
 }
 
 variable "ssh_user" {
-  default = "ubuntu"
+  default = []
 }
 
 variable "proxmox_host" {
-    default = "pve"
+    default = []
 }
 
 variable "template_name" {
     default = "ubuntu-server-focal-kubernetes"
 }
+
+
+
+
+

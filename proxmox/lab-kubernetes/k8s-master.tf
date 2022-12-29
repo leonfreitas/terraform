@@ -1,11 +1,12 @@
 resource "proxmox_vm_qemu" "k8s-master" {
   count = 1
-  name = "k8s-master-${count.index + 1}"
-  target_node = var.proxmox_host
+  name = "vm-k8s-master-${count.index + 1}"
+  target_node = data.vault_generic_secret.proxmox.data["proxmox_host"]
   clone = var.template_name
+  clone_wait = 360
   agent = 1
   os_type = "Linux"
-  cores = 2
+  cores = 4
   sockets = 1
   cpu = "host"
   memory = 2048
@@ -14,7 +15,7 @@ resource "proxmox_vm_qemu" "k8s-master" {
 
   disk {
     slot = 0
-    size = "20G"
+    size = "10G"
     type = "scsi"
     storage = "datastore"
     iothread = 1
@@ -23,7 +24,7 @@ resource "proxmox_vm_qemu" "k8s-master" {
   connection {
         type        = "ssh"
         host        = self.ssh_host
-        user        = var.ssh_user
+        user        = data.vault_generic_secret.proxmox.data["ssh_user"]
         private_key = "${file("~/.ssh/id_rsa")}"
         port        = self.ssh_port
     }
@@ -42,7 +43,17 @@ resource "proxmox_vm_qemu" "k8s-master" {
   ipconfig0 = "ip=10.10.100.5${count.index + 1}/24,gw=10.10.100.1"
   
   sshkeys = <<EOF
-  ${var.ssh_key}
+  ${data.vault_generic_secret.proxmox.data["ssh_key"]}
   EOF
-  
+
+  provisioner "remote-exec" {
+    connection {
+      host = self.default_ipv4_address
+      user = data.vault_generic_secret.proxmox.data["ssh_user"]
+      file = self.private_key
+    }
+    inline = [
+      "echo 'Conectado!'"
+    ]
+  }
 }
