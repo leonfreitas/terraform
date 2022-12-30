@@ -1,5 +1,5 @@
 resource "proxmox_vm_qemu" "k8s-master" {
-  count = 1
+  count = var.vm_master_count
   name = "vm-k8s-master-${count.index + 1}"
   target_node = data.vault_generic_secret.proxmox.data["proxmox_host"]
   clone = var.template_name
