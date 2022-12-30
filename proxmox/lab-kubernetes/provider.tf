@@ -8,8 +8,8 @@ terraform {
 }
 
 provider "vault" {
-  address = "http://10.10.100.60:8200/"
-  token = "hvs.SUNweZwayNq7XjbWDPiuj8Xb"
+  address = var.vault_address
+  token = var.vault_token
 }
 
 data "vault_generic_secret" "proxmox" {
@@ -23,7 +23,7 @@ provider "proxmox" {
     _default = "debug"
     _capturelog = ""
   }
-  pm_timeout = 200000
+  pm_timeout = 600
   # url is the hostname (FQDN if you have one) for the proxmox host you'd like to connect to to issue the commands. my proxmox host is 'prox-1u'. Add /api2/json at the end for the API
   pm_api_url = data.vault_generic_secret.proxmox.data["proxmox_url"]
   # api token id is in the form of: <username>@pam!<tokenId>
