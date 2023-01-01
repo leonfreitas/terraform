@@ -11,12 +11,12 @@ resource "proxmox_vm_qemu" "k8s-worker" {
   cpu = "host"
   memory = 2048
   scsihw = "virtio-scsi-pci"
-  bootdisk = "scsi0"
+  bootdisk = "virtio0"
 
   disk {
     slot = 0
     size = "10G"
-    type = "scsi"
+    type = "virtio"
     storage = "datastore"
     iothread = 1
   }
