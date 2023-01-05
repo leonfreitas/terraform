@@ -1,0 +1,10 @@
+---
+- block:
+    - name: Execute ping Master
+      ping:
+  when: "'master' in ansible_nodename"
+
+- block:
+    - name: Execute ping Worker
+      ping:
+  when: "'worker' in ansible_nodename"

@@ -1,0 +1,48 @@
+- name: Add google apt signing key with URL
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Create kubernetes repo file
+  file:
+      path: "/etc/apt/sources.list.d/kubernetes.list"
+      state: "touch"
+
+- name: Add kubernetes Source
+  blockinfile:
+    path: "/etc/apt/sources.list.d/kubernetes.list"
+    block: |
+          deb https://apt.kubernetes.io/ kubernetes-xenial main
+
+- name: Install kubelet
+  apt: 
+    name: kubelet=1.26.0-00
+    state: present
+    update_cache: yes
+
+- name: Hold kubelet
+  dpkg_selections:
+    name: kubelet
+    selection: hold
+    
+- name: Install kubeadm
+  apt: 
+    name: kubeadm=1.26.0-00
+    state: present
+    update_cache: yes
+
+- name: Hold kubeadm
+  dpkg_selections:
+    name: kubeadm
+    selection: hold
+
+- name: Install kubectl
+  apt: 
+    name: kubectl=1.26.0-00
+    state: present
+    update_cache: yes
+
+- name: Hold kubectl
+  dpkg_selections:
+    name: kubectl
+    selection: hold

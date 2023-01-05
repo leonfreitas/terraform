@@ -1,0 +1,51 @@
+- name: Create containerd config file
+  file:
+    path: "/etc/modules-load.d/containerd.conf"
+    state: "touch"
+
+- name: Add conf for containerd
+  blockinfile: 
+    path: "/etc/modules-load.d/containerd.conf"
+    block: |
+          overlay
+          br_netfilter
+
+- name: Executing modprobe for module overlay in nodes
+  modprobe:
+    name: overlay
+    state: present
+
+- name: Executing modprobe for module br_netfilter in nodes
+  modprobe:
+    name: br_netfilter
+    state: present
+
+- name: Create system config file for networking
+  file:
+    path: "/etc/sysctl.d/99-kubernetes-cri.conf"
+    state: "touch"
+
+- name: Add conf for system config file
+  blockinfile: 
+    path: "/etc/sysctl.d/99-kubernetes-cri.conf"
+    block: |
+          net.bridge.bridge-nf-call-iptables = 1
+          net.ipv4.ip_forward = 1
+          net.bridge.bridge-nf-call-ip6tables = 1
+
+- name: Apply settings in sysctl
+  command: sudo sysctl --system
+
+- name: Install pre requisites
+  apt:
+    pkg:
+      - gnupg2
+      - software-properties-common
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - vim
+      - git
+      - wget
+    state: present
+    update_cache: yes

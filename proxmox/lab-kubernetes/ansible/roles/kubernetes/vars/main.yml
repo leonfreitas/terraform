@@ -1,0 +1,3 @@
+#https://docs.projectcalico.org/manifests/calico.yaml
+#https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+network_provider: https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml

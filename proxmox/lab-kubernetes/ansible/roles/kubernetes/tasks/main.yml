@@ -1,0 +1,15 @@
+---
+
+- import_tasks: kubeuser.yml
+
+- import_tasks: update_hosts.yml
+
+- import_tasks: preparing.yml
+
+- import_tasks: containerd.yml
+
+- import_tasks: kubernetes_install.yml
+
+- import_tasks: init_cluster.yml
+
+- import_tasks: join_nodes.yml
