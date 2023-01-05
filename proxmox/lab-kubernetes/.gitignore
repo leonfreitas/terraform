@@ -5,3 +5,4 @@
 *.tfstate.*
 terraform.tfvars
 hosts.ini
+hosts
