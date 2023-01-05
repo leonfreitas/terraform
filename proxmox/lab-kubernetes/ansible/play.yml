@@ -1,0 +1,4 @@
+- hosts: all
+  become: yes
+  roles: 
+    - role: '/home/leonardo/terraform/proxmox/lab-kubernetes/ansible/roles/kubernetes'
